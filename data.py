@@ -1,9 +1,9 @@
 import yfinance as yf
 import pandas as pd
-# from datetime import datetime --- uncomment this if you want end_date to fetch the latest live data
+from config import TICKERS, EXCLUDE_TICKERS, START_DATE, END_DATE
 
 def fetch_raw_prices(
-        tickers: list[str], start: str, end: str, exclude_tickers: list[str] = ["XLC", "XLRE"]
+        tickers: list[str], start: str, end: str, exclude_tickers: list[str] = EXCLUDE_TICKERS
 ):
     """
     Download OHLCV data for multiple tickers and reshape into a long and tidy format
@@ -41,8 +41,6 @@ def fetch_raw_prices(
     return raw_prices
 
 if __name__ == "__main__":
-    tickers = ['XLK', 'XLF', 'XLE', 'XLV', 'XLY', 'XLP', 'XLI', 'XLB', 'XLU', 'XLRE', 'XLC', 'SPY']
-    start_date = '2010-01-01'
-    end_date = '2026-08-31'  # for live data instead: end_date = use datetime.today().strftime("%Y-%m-%d")
+    df_prices = fetch_raw_prices(TICKERS, START_DATE, END_DATE)
 
-    df_prices = fetch_raw_prices(tickers, start_date, end_date)
+    print(df_prices.head())
